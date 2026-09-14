@@ -1,148 +1,263 @@
 @font-face {
-  font-family: 'Helvetica';
-  src: url('./fonts/helvetica_regular.otf') format('opentype');
+  font-family: 'MyFont';
+  src: url('../fonts/Nekst-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
 }
 
-@font-face {
-  font-family: 'Helvetica';
-  src: url('./fonts/helvetica_light.otf') format('opentype');
-  font-weight: 200;
-  font-style: normal;  
+
+.register-page {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 6px;
+    padding: 6px;
 }
 
-@font-face {
-  font-family: 'Gotic60';
-  src: url('../fonts/Gothic60-Regular.otf') format('opentype');
-  font-weight: 200;
-  font-style: normal;  
-}
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  background:#fff;
-}
+
 
 * {
   box-sizing: border-box;
 }
 
-.app {
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  padding: 35px;
-  font-family: 'Gotic60';
-  font-weight: 200;
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #ffffff;
+  font-family: 'MyFont', Arial, sans-serif;
+  color: #1e2749;
 }
+
+
+
+
 
 
 form {
-  border-radius: 5px;
+  width: 100%;
+  max-width: 560px;
+
   display: flex;
   flex-direction: column;
-  gap: 40px; 
-  width: 100%;
-  max-width: 550px; 
-  padding: 20px;
-  border: 1px solid #ddd;
-  background-color: #1e2749;
+  gap: 26px;
+
+  padding: 44px;
+
+  background-color: #ffffff;
+  border-radius: 16px;
 }
+
+
+
+
+h1 {
+  margin: 0 0 8px;
+
+  
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.2;
+
+  color: #1e2749;
+  text-align: center;
+}
+
+
+
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  color: #1e2749;
+
+  
+  font-size: 14px;
+  font-weight: 400;
+}
+
+
 
 
 .namerow {
   display: flex;
-  gap: 15px;
-  
+  gap: 14px;
 }
+
 .namerow label {
   flex: 1;
 }
+
 .namerow input {
   width: 100%;
 }
 
 
-h1 {
-  font-family: 'Gotic60';
-  font-weight: 200;
-  font-size: 30pt;
-  color: #E4D9FF;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-
-label {
-  border-radius: 5px;
-  color: #E4D9FF;
-  display: flex;
-  flex-direction: column;
-  gap: 5px; 
-  font-weight: 400;
-  font-size: 14px;
-}
 
 
 input {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 2px;
-  font-size: 16px;
+  width: 100%;
+
+  padding: 12px 14px;
+
+  border: 1px solid #eeeeee;
+  border-radius: 8px;
+
+  background-color: #f7f7f8;
+  color: #1e2749;
+
+  font-family: 'MyFont', Arial, sans-serif;
+
+  font-size: 15px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
+input::placeholder {
+  color: #999999;
+}
 
 input:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+  border-color: #E4D9FF;
+  background-color: rgba(255, 255, 255, 0.09);
+  box-shadow: 0 0 0 3px rgba(228, 217, 255, 0.12);
 }
 
-.toSignIn {
 
-  color: #6572a5;
 
+.checkbox-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
 }
 
-.toSignIn:hover {
+.checkbox-label input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
 
-  color: #f8f8f8;
-  transition: color 0.3s;
+  margin: 0;
+
+  accent-color: #E4D9FF;
 }
+
+
+
+
+button {
+  width: 100%;
+
+  margin-top: 4px;
+  padding: 12px 16px;
+
+  border: none;
+  border-radius: 8px;
+
+  background-color: #43408e;
+  color: #ffffff;
+
+  
+  font-size: 15px;
+  font-weight: 400;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+button:hover {
+  background-color: #E4D9FF;
+  color: #1e2749;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+
 
 .signin-link {
   display: flex;
   justify-content: center;
 }
 
-.checkbox-label {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
+.toSignIn {
+  color: #6572a5;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  transition: color 0.2s ease;
 }
 
-.checkbox-label input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  margin: 0;           
+.toSignIn:hover {
+  color: #E4D9FF;
 }
 
-button {
-  margin-top: 10px;
-  padding: 12px;
-  background-color: #273469;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background 0.3s;
-  font-family: 'Gotic60';
-  font-weight: 200;
+
+.brand-side {
+    position: relative;
+    overflow: hidden;
+    background: #1e2749;
+
+    border-radius: 36px;
+    padding: 48px;
 }
 
-button:hover {
-  background-color: #e4d9ff;
+.form-side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+    background: #ffffff;
+}
+
+.brand-pattern {
+    position: absolute;
+    inset: 0;
+
+    background-image: url('./assets/tusur-pattern.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.brand-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+}
+
+.brand-label {
+    display: block;
+
+    font-size: 32px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.brand-content h2 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    margin: 0;
+
+    font-size: 58px;
+    font-weight: 600;
+    line-height: 1.05;
+
+    text-align: justify;
+    color: #ffffff;
 }

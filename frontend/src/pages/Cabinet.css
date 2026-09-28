@@ -1,27 +1,109 @@
+:root {
+  --sidebar: #273469;      /* цвет сайдбара и фона страницы */
+  --sidebar-text: #e4d9ff; /* цвет неактивных пунктов */
+  --panel: #fafaff;        /* фон белой панели справа */
+  --text: #30343f;
+}
+
 body {
   margin: 0;
 }
 
+/* --- Каркас --- */
 .cabinet {
   display: flex;
   min-height: 100vh;
-  color: #30343f;
-  background: #fafaff;
+  background: var(--sidebar);
+  color: var(--text);
 }
 
 .cabinet-sidebar {
-  width: 260px;
+  width: 250px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 24px 16px;
-  background: #1e2749;
-  color: #e4d9ff;
+  color: var(--sidebar-text);
+  box-sizing: border-box;
 }
 
 .cabinet-main {
   flex: 1;
   display: flex;
   flex-direction: column;
+  margin: 12px 12px 12px 0;
+  background: var(--panel);
+  border-radius: 24px;
+}
+
+/* --- Логотип и переключатель роли --- */
+.cabinet-brand {
+  padding: 4px 12px 12px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.cabinet-role-switch {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 4px;
+  font-size: 12px;
+}
+
+.cabinet-role-switch select {
+  padding: 8px 10px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.cabinet-role-switch select option {
+  color: var(--text);
+}
+
+/* --- Меню --- */
+.cabinet-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--sidebar-text);
+  font-family: inherit;
+  font-size: 15px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Активный пункт: белая таблетка */
+.nav-item.active {
+  background: #fff;
+  color: var(--sidebar);
+  font-weight: bold;
+}
+
+/* Кнопка «Выйти» прижата к низу сайдбара */
+.nav-item.logout {
+  margin-top: auto;
 }

@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+}
+
+.cabinet {
+  display: flex;
+  min-height: 100vh;
+  color: #30343f;
+  background: #fafaff;
+}
+
+.cabinet-sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 16px;
+  background: #1e2749;
+  color: #e4d9ff;
+}
+
+.cabinet-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}

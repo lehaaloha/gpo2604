@@ -2,6 +2,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Register from './pages/Register';
 import SignIn from './pages/SignIn';
+import Cabinet from './pages/Cabinet';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Route path="/" element={<Register />} />
         <Route path="/register" element={<Register />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/cabinet" element={<Cabinet />} />
       </Routes>
     </BrowserRouter>
   );

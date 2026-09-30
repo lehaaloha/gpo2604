@@ -4,6 +4,40 @@ import Icon from '../components/Icon';
 import { ROLE_LIST, NAV } from '../data/cabinetData';
 import './Cabinet.css';
 
+
+
+
+function CandidateOverview() {
+  return (
+    <div className="overview-grid">
+      <div className="card stat-card">
+        <span className="stat-label">Назначено тестов</span>
+        <span className="stat-value">—</span>
+      </div>
+      <div className="card stat-card">
+        <span className="stat-label">Пройдено</span>
+        <span className="stat-value">—</span>
+      </div>
+      <div className="card stat-card">
+        <span className="stat-label">Статус заявки</span>
+        <span className="stat-value">—</span>
+      </div>
+
+      <div className="card wide-card">
+        <h2>Мои тестирования</h2>
+        <p className="empty-hint">Пока нет назначенных тестирований.</p>
+      </div>
+
+      <div className="card wide-card">
+        <h2>Уведомления</h2>
+        <p className="empty-hint">Новых уведомлений нет.</p>
+      </div>
+    </div>
+  );
+}
+
+
+
 function Cabinet() {
   const navigate = useNavigate();
   const [role, setRole] = useState('candidate');
@@ -17,10 +51,17 @@ function Cabinet() {
   const currentNav = NAV[role];
   const currentItem = currentNav.find((item) => item.id === section);
 
+  function renderContent() {
+    if (role === 'candidate' && section === 'overview'){
+      return <CandidateOverview />;
+    }
+    return <p>Раздел «{currentItem?.label}» пока пуст.</p>
+  }
+
   return (
     <div className="cabinet">
       <aside className="cabinet-sidebar">
-        <div className="cabinet-brand">ГПО АСУ-2604</div>
+        <div className="cabinet-brand">ТУТ ЛОГО</div>
 
         <label className="cabinet-role-switch">
           Роль (временно, для теста)
@@ -59,7 +100,7 @@ function Cabinet() {
         </header>
 
         <section className="cabinet-content">
-          <p>Раздел «{currentItem?.label}» пока пуст.</p>
+          {renderContent()}
         </section>
       </main>
     </div>

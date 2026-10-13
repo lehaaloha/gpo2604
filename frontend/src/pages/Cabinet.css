@@ -194,3 +194,7 @@ body {
   color: rgba(48, 52, 63, 0.5);
   font-size: 14px;
 }
+
+.overview-grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}

@@ -8,19 +8,24 @@ import './Cabinet.css';
 
 
 function CandidateOverview() {
+  const stats = {};
+  const notifications = [];
+
   return (
     <div className="overview-grid">
       <div className="card stat-card">
         <span className="stat-label">Назначено тестов</span>
-        <span className="stat-value">—</span>
+        <span className="stat-value">{stats.assignedTests ?? '—'}</span>
       </div>
+
       <div className="card stat-card">
         <span className="stat-label">Пройдено</span>
-        <span className="stat-value">—</span>
+        <span className="stat-value">{stats.completedTests ?? '—'}</span>
       </div>
+
       <div className="card stat-card">
         <span className="stat-label">Статус заявки</span>
-        <span className="stat-value">—</span>
+        <span className="stat-value">{stats.applicationStatus ?? '—'}</span>
       </div>
 
       <div className="card wide-card">
@@ -30,7 +35,89 @@ function CandidateOverview() {
 
       <div className="card wide-card">
         <h2>Уведомления</h2>
-        <p className="empty-hint">Новых уведомлений нет.</p>
+
+        {notifications.length === 0 ? (
+          <p className="empty-hint">Новых уведомлений нет.</p>
+        ) : (
+          notifications.map((n) => (
+            <div key={n.id} className="notification-item">
+              <span>{n.text}</span>
+              <span>{n.date}</span>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
+function HrOverview() {
+  const stats = {};
+  const awaitingDecision = [];
+  const hiringRequests = [];
+  const notifications = [];
+
+  return (
+    <div className="overview-grid overview-grid-4">
+      <div className="card stat-card">
+        <span className="stat-label">Кандидатов в базе</span>
+        <span className="stat-value">{stats.candidatesTotal ?? '—'}</span>
+      </div>
+
+      <div className="card stat-card">
+        <span className="stat-label">Активных опросов</span>
+        <span className="stat-value">{stats.activeSurveys ?? '—'}</span>
+      </div>
+
+      <div className="card stat-card">
+        <span className="stat-label">Ждут решения</span>
+        <span className="stat-value">{stats.awaitingDecision ?? '—'}</span>
+      </div>
+
+      <div className="card stat-card">
+        <span className="stat-label">Performance Review в процессе</span>
+        <span className="stat-value">{stats.reviewsInProgress ?? '—'}</span>
+      </div>
+
+      <div className="card wide-card">
+        <h2>Ждут решения</h2>
+        {awaitingDecision.length === 0 ? (
+          <p className="empty-hint">Нет кандидатов, ожидающих решения.</p>
+        ) : (
+          awaitingDecision.map((c) => (
+            <div key={c.id} className="candidate-item">
+              <span>{c.name}</span>
+              <span>{c.vacancy}</span>
+            </div>
+          ))
+        )}
+      </div>
+
+      <div className="card wide-card">
+        <h2>Запросы на подбор</h2>
+        {hiringRequests.length === 0 ? (
+          <p className="empty-hint">Новых запросов нет.</p>
+        ) : (
+          hiringRequests.map((r) => (
+            <div key={r.id} className="request-item">
+              <span>{r.title}</span>
+              <span>{r.manager}</span>
+            </div>
+          ))
+        )}
+      </div>
+
+      <div className="card wide-card">
+        <h2>Уведомления</h2>
+        {notifications.length === 0 ? (
+          <p className="empty-hint">Новых уведомлений нет.</p>
+        ) : (
+          notifications.map((n) => (
+            <div key={n.id} className="notification-item">
+              <span>{n.text}</span>
+              <span>{n.date}</span>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
@@ -54,6 +141,9 @@ function Cabinet() {
   function renderContent() {
     if (role === 'candidate' && section === 'overview'){
       return <CandidateOverview />;
+    }
+    if (role === 'hr' && section === 'overview') {
+      return <HrOverview />;
     }
     return <p>Раздел «{currentItem?.label}» пока пуст.</p>
   }

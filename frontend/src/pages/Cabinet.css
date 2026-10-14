@@ -198,3 +198,31 @@ body {
 .overview-grid-4 {
   grid-template-columns: repeat(4, 1fr);
 }
+
+/*мои тестирования*/
+
+.tests-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.test-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.test-card h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.badge {
+  align-self: flex-start;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(39, 52, 105, 0.1);
+  color: var(--sidebar);
+  font-size: 12px;
+}

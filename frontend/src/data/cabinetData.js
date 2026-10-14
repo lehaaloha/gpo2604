@@ -38,3 +38,31 @@ export const NAV = {
     { id: 'ai', label: 'AI-модули', icon: 'settings' },
   ],
 };
+
+//ПОКА НЕ ИСПОЛЬЗУЮТСЯ!!!
+export const STATS = {
+  candidate: [
+    { id: 'assignedTests', label: 'Назначено тестов' },
+    { id: 'completedTests', label: 'Пройдено' },
+    { id: 'pendingReview', label: 'На проверке' },
+    { id: 'applicationStatus', label: 'Статус заявки' },
+  ],
+  hr: [
+    { id: 'candidatesTotal', label: 'Кандидатов в базе' },
+    { id: 'activeSurveys', label: 'Активных опросов' },
+    { id: 'awaitingDecision', label: 'Ждут решения' },
+    { id: 'reviewsInProgress', label: 'Performance Review в процессе' },
+  ],
+  manager: [
+    { id: 'candidatesOnMyVacancies', label: 'Кандидатов на мои вакансии' },
+    { id: 'awaitingConclusion', label: 'Ждут заключения' },
+    { id: 'reviewsToFill', label: 'Ревью к заполнению' },
+    { id: 'hiringRequests', label: 'Запросов на подбор' },
+  ],
+  admin: [
+    { id: 'usersTotal', label: 'Пользователей' },
+    { id: 'questionsTotal', label: 'Вопросов в банке' },
+    { id: 'aiModulesActive', label: 'AI-модулей активно' },
+    { id: 'eventsToday', label: 'Событий за сегодня' },
+  ],
+};

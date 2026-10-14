@@ -124,6 +124,142 @@ function HrOverview() {
 }
 
 
+function ManagerOverview() {
+  const stats = {};
+  const awaitingConclusion = [];
+  const notifications = [];
+
+  return (
+    <div className="overview-grid overview-grid-4">
+      <div className="card stat-card">
+        <span className="stat-label">Кандидатов на мои вакансии</span>
+        <span className="stat-value">{stats.candidatesOnMyVacancies ?? '—'}</span>
+      </div>
+
+      <div className="card stat-card">
+        <span className="stat-label">Ждут заключения</span>
+        <span className="stat-value">{stats.awaitingConclusion ?? '—'}</span>
+      </div>
+
+      <div className="card stat-card">
+        <span className="stat-label">Ревью к заполнению</span>
+        <span className="stat-value">{stats.reviewsToFill ?? '—'}</span>
+      </div>
+
+      <div className="card stat-card">
+        <span className="stat-label">Запросов на подбор</span>
+        <span className="stat-value">{stats.hiringRequests ?? '—'}</span>
+      </div>
+
+      <div className="card wide-card">
+        <h2>Ждут вашего заключения</h2>
+        {awaitingConclusion.length === 0 ? (
+          <p className="empty-hint">Нет кандидатов, ожидающих заключения.</p>
+        ) : (
+          awaitingConclusion.map((c) => (
+            <div key={c.id} className="candidate-item">
+              <span>{c.name}</span>
+              <span>{c.vacancy}</span>
+            </div>
+          ))
+        )}
+      </div>
+
+      <div className="card wide-card">
+        <h2>Уведомления</h2>
+        {notifications.length === 0 ? (
+          <p className="empty-hint">Новых уведомлений нет.</p>
+        ) : (
+          notifications.map((n) => (
+            <div key={n.id} className="notification-item">
+              <span>{n.text}</span>
+              <span>{n.date}</span>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
+
+
+
+function AdminOverview() {
+  const stats = {};
+  const aiModules = [];
+
+  return (
+    <div className="overview-grid">
+      <div className="card stat-card">
+        <span className="stat-label">Пользователей</span>
+        <span className="stat-value">{stats.usersTotal ?? '—'}</span>
+      </div>
+
+      <div className="card stat-card">
+        <span className="stat-label">Заблокированных</span>
+        <span className="stat-value">{stats.usersBlocked ?? '—'}</span>
+      </div>
+
+      <div className="card stat-card">
+        <span className="stat-label">Вопросов в банке</span>
+        <span className="stat-value">{stats.questionsTotal ?? '—'}</span>
+      </div>
+
+      <div className="card wide-card">
+        <h2>AI-модули</h2>
+        {aiModules.length === 0 ? (
+          <p className="empty-hint">Нет данных о модулях.</p>
+        ) : (
+          aiModules.map((m) => (
+            <div key={m.id} className="module-item">
+              <span>{m.name}</span>
+              <span>{m.status}</span>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
+
+
+
+function CandidateTests(){
+  //const tests = {}
+
+  //хардкод для проверки
+
+  const tests = [
+  { id: 1, vacancy: 'Backend-разработчик', questions: 20, time: 40, status: 'Доступно' },
+  { id: 2, vacancy: 'Frontend-разработчик', questions: 15, time: 30, status: 'На проверке' },
+  { id: 3, vacancy: 'DevOps-инженер', questions: 18, time: 35, status: 'Проверено' },
+  ];
+  return (
+    <div>
+      {tests.length === 0 ? (
+        <div className="card">
+          <p className="empty-hint">Вам пока не назначено ни одного тестирования.</p>
+        </div>
+      ) : (
+        <div className="tests-grid">
+          {tests.map((t) => (
+            <div key={t.id} className="card test-card">
+              <h2>{t.vacancy}</h2>
+              <span className="badge">{t.status}</span>
+              <p>{t.questions} вопросов, {t.time} минут</p>
+
+              {t.status === 'Доступно' && <button>Начать тестирование</button>}
+              {t.status === 'На проверке' && <p className="empty-hint">Оценка выполняется</p>}
+              {t.status === 'Проверено' && <button>Посмотреть результаты</button>}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+
 
 function Cabinet() {
   const navigate = useNavigate();
@@ -145,6 +281,16 @@ function Cabinet() {
     if (role === 'hr' && section === 'overview') {
       return <HrOverview />;
     }
+    if (role === 'manager' && section === 'overview') {
+      return <ManagerOverview />;
+    }
+    if (role === 'admin' && section === 'overview') {
+      return <AdminOverview />;
+    }
+    if (role === 'candidate' && section === 'tests'){
+      return <CandidateTests />
+    }
+    
     return <p>Раздел «{currentItem?.label}» пока пуст.</p>
   }
 

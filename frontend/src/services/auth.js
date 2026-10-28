@@ -22,17 +22,32 @@ function readUsers() {
   }
 }
 
-// Регистрация: запоминаем нового кандидата
-export async function register({ name, email, phone, password }) {
-  const allUsers = [...DEMO_USERS, ...readUsers()];
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
-  if (allUsers.some((u) => u.email === email)) {
-    return { ok: false, error: 'Этот email уже зарегистрирован' };
+// Регистрация: отправляем данные на бэкенд (POST /api/auth/register)
+export async function register({ firstName, lastName, email, phone, password }) {
+  try {
+    const res = await fetch(`${API_URL}/api/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        first_name: firstName,
+        last_name: lastName,
+        email,
+        phone,
+        password,
+      }),
+    });
+
+    if (res.ok) return { ok: true };
+
+    const data = await res.json().catch(() => ({}));
+    if (res.status === 409) return { ok: false, error: data.detail };
+    if (res.status === 422) return { ok: false, error: 'Проверьте правильность введённых данных' };
+    return { ok: false, error: 'Ошибка сервера, попробуйте позже' };
+  } catch {
+    return { ok: false, error: 'Нет связи с сервером' };
   }
-
-  const user = { name, email, phone, password, role: 'candidate' };
-  localStorage.setItem(USERS_KEY, JSON.stringify([...readUsers(), user]));
-  return { ok: true };
 }
 
 // Вход: проверяем email и пароль, запоминаем, кто вошёл

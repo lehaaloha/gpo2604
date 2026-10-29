@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Register.css'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useInput } from '../hooks/useValidation';
 import { register } from '../services/auth';
 
@@ -15,6 +15,9 @@ function Register() {
   const aprovepassword = useInput('', { isEmpty: true, minLength: 6, isMatch: password.value });
   const [agree, setAgree] = useState(false);
   const phone = useInput('', { isEmpty: true});
+  const navigate = useNavigate();
+  const [serverError, setServerError] = useState('');
+  const [loading, setLoading] = useState(false);
 
 
 
@@ -35,23 +38,33 @@ const isFormValid = () => {
 
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setServerError('');
 
     aprovepassword.onBlur();
 
+    if (!isFormValid()) {
+      if (aprovepassword.matchError) setServerError('Пароли не совпадают');
+      else setServerError('Заполните все поля и отметьте согласие');
+      return;
+    }
 
-    if (isFormValid()) {
-      console.log('Форма отправлена');
-      alert('Регистрация успешна!');
+    setLoading(true);
+    const result = await register({
+      firstName: name.value.trim(),
+      lastName: secondname.value.trim(),
+      email: email.value.trim(),
+      phone: phone.value.trim(),
+      password: password.value,
+    });
+    setLoading(false);
+
+    if (result.ok) {
+      navigate('/signin');
     } else {
-    if (aprovepassword.matchError) {
-      alert('Пароли не совпадают!');
+      setServerError(result.error);
     }
-    }
-    
-
-  
   };
 
 
@@ -129,7 +142,9 @@ const isFormValid = () => {
             <span>Согласие на обработку персональных данных</span>
           </label>
 
-          <button type="submit">Подтвердить</button>
+          {serverError && <p className="error">{serverError}</p>}
+
+          <button type="submit" disabled={loading}>{loading ? 'Отправка...' : 'Подтвердить'}</button>
           
           
           <div className="signin-link">

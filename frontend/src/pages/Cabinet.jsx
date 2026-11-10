@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../components/Icon';
 import { ROLE_LIST, NAV } from '../data/cabinetData';
+import { getMyTests } from '../services/tests';
 import './Cabinet.css';
-
 
 
 
@@ -224,37 +224,56 @@ function AdminOverview() {
 
 
 
-function CandidateTests(){
-  //const tests = {}
+const STATUS_LABELS = {
+  available: 'Доступно',
+  in_progress: 'Продолжить',
+  in_review: 'На проверке',
+  checked: 'Проверено',
+};
 
-  //хардкод для проверки
 
-  const tests = [
-  { id: 1, vacancy: 'Backend-разработчик', questions: 20, time: 40, status: 'Доступно' },
-  { id: 2, vacancy: 'Frontend-разработчик', questions: 15, time: 30, status: 'На проверке' },
-  { id: 3, vacancy: 'DevOps-инженер', questions: 18, time: 35, status: 'Проверено' },
-  ];
+function CandidateTests() {
+  const navigate = useNavigate();
+  const [tests, setTests] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    getMyTests()
+      .then(setTests)
+      .catch((e) => setError(e.detail || 'Не удалось загрузить тестирования'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  function openTest(test) {
+    if (test.status === 'available' || test.status === 'in_progress') {
+      navigate(`/test/${test.session_id}`);
+    } else {
+      navigate(`/test/${test.session_id}/result`);
+    }
+  }
+
+  if (loading) return <p className="empty-hint">Загрузка…</p>;
+  if (error) return <p className="empty-hint">{error}</p>;
+  if (tests.length === 0) return <p className="empty-hint">Назначенных тестирований пока нет</p>;
+
   return (
-    <div>
-      {tests.length === 0 ? (
-        <div className="card">
-          <p className="empty-hint">Вам пока не назначено ни одного тестирования.</p>
+    <div className="tests-grid">
+      {tests.map((test) => (
+        <div className="test-card" key={test.session_id}>
+          <h3>{test.title}</h3>
+          <p>{test.vacancy}</p>
+          <p>
+            Вопросов: {test.questions_count} · {test.time_limit_minutes} мин
+          </p>
+          <span className="badge">{STATUS_LABELS[test.status]}</span>
+          <button onClick={() => openTest(test)}>
+            {test.status === 'available' && 'Начать'}
+            {test.status === 'in_progress' && 'Продолжить'}
+            {(test.status === 'in_review' || test.status === 'checked') && 'Результат'}
+          </button>
         </div>
-      ) : (
-        <div className="tests-grid">
-          {tests.map((t) => (
-            <div key={t.id} className="card test-card">
-              <h2>{t.vacancy}</h2>
-              <span className="badge">{t.status}</span>
-              <p>{t.questions} вопросов, {t.time} минут</p>
-
-              {t.status === 'Доступно' && <button>Начать тестирование</button>}
-              {t.status === 'На проверке' && <p className="empty-hint">Оценка выполняется</p>}
-              {t.status === 'Проверено' && <button>Посмотреть результаты</button>}
-            </div>
-          ))}
-        </div>
-      )}
+      ))}
     </div>
   );
 }
